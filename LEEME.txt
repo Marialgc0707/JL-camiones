@@ -1,0 +1,15 @@
+JL CAMIONES — PROYECTO WEB
+
+Archivos:
+- index.html: abre este archivo en el navegador.
+- styles.css: estilos visuales.
+- catalogo.js: datos del negocio, marcas, horario y productos.
+- app.js: lógica del catálogo y carrito.
+- fotos/: coloca aquí el logo y las fotografías.
+
+IMPORTANTE:
+1. El HTML carga catalogo.js y app.js una sola vez.
+2. El logo se espera en fotos/logo.png.
+3. No se recibieron fotos de repuestos/logo dentro de los archivos de código que se procesaron. Copia tus imágenes a la carpeta fotos y usa sus nombres en catalogo.js.
+4. Revisa en catalogo.js los campos marcados COMPLETAR antes de publicar: nombre/slogan/dirección, horario, mínimos al mayor, mapa y datos comerciales. El WhatsApp que ya estaba en el archivo se conservó.
+5. Para ver la página, descomprime la carpeta y abre index.html. También puedes abrir la carpeta en Visual Studio Code y usar Live Server si lo tienes instalado.

@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JL Camiones | Repuestos</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="catalogo.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <img src="fotos/icono-jl-camion.png" alt="Logo JL Camiones">
+      <span>REPUESTOS PARA CAMIONES</span>
+    </a>
+    <a class="contact-link" href="https://wa.me/584245329777"
+       target="_blank" rel="noopener">
+      Consultar por WhatsApp
+    </a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">JL CAMIONES · BARQUISIMETO</p>
+        <h1>Repuestos para que tu camión
+          <em>siga en marcha.</em>
+        </h1>
+        <p class="hero-copy">
+          Encuentra el repuesto que necesitas y prepara tu cotización
+          de forma rápida.
+        </p>
+        <a class="button" href="#catalogo">VER CATÁLOGO ↓</a>
+      </div>
+     <div class="hero-logo">
+  <img
+    src="fotos/logo-jl-camiones.jpg"
+    alt="Logo de JL Camiones"
+  >
+</div>
+    </section>
+
+    <section class="benefits">
+      <div><b>01</b> Atención personalizada</div>
+      <div><b>02</b> Cotización por WhatsApp</div>
+      <div><b>03</b> Repuestos para camiones</div>
+    </section>
+
+    <section id="catalogo" class="catalog">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">NUESTRO CATÁLOGO</p>
+          <h2>Busca tu repuesto</h2>
+          <p class="muted">
+            Productos de ejemplo: los reemplazaremos con tu inventario real.
+          </p>
+        </div>
+
+        <div class="cart-summary">
+          <span>Tu cotización</span>
+          <strong><span id="cart-count">0</span> productos</strong>
+          <button id="open-cart">Ver cotización →</button>
+        </div>
+      </div>
+
+      <div class="tools">
+        <input id="search-input" type="search"
+          placeholder="Buscar por nombre o categoría..."
+          aria-label="Buscar productos">
+        <select id="category-filter" aria-label="Filtrar por categoría">
+          <option value="todas">Todas las categorías</option>
+        </select>
+      </div>
+
+      <div id="product-grid" class="product-grid"></div>
+      <p id="empty-message" class="muted" hidden>
+        No encontramos productos con esa búsqueda.
+      </p>
+    </section>
+
+    <section class="contact-band">
+      <div>
+        <p class="eyebrow">¿NO ENCUENTRAS LO QUE BUSCAS?</p>
+        <h2>Te ayudamos a ubicarlo.</h2>
+        <p>Envíanos tu consulta y prepara una cotización por WhatsApp.</p>
+      </div>
+      <a class="button" href="https://wa.me/584245329777"
+         target="_blank" rel="noopener">
+        HABLAR CON JL ↗
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <img src="fotos/logo-jl-camiones-preview.png" alt="Logo JL Camiones">
+    <strong>JL Camiones</strong>
+    <span>Barquisimeto, Venezuela · Confirma precio y disponibilidad por WhatsApp.</span>
+  </footer>
+
+  <div id="cart-panel" class="cart-panel" hidden>
+    <div id="cart-backdrop" class="backdrop"></div>
+
+    <section class="drawer" role="dialog" aria-modal="true"
+      aria-labelledby="cart-title">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">JL CAMIONES</p>
+          <h2 id="cart-title">Tu cotización</h2>
+        </div>
+        <button id="close-cart" class="close" aria-label="Cerrar">×</button>
+      </div>
+
+      <div id="cart-items"></div>
+      <p id="cart-empty" class="muted">
+        Todavía no has agregado productos.
+      </p>
+
+      <label for="customer-notes">Detalles adicionales (opcional)</label>
+      <textarea id="customer-notes" rows="3"
+        placeholder="Marca, modelo o año del camión..."></textarea>
+
+      <button id="send-whatsapp" class="send-button">
+        Enviar cotización por WhatsApp ↗
+      </button>
+      <p class="small">
+        Se abrirá WhatsApp para revisar el mensaje antes de enviarlo.
+      </p>
+    </section>
+  </div>
+</body>
+</html>
