@@ -41,12 +41,52 @@
   >
 </div>
     </section>
-
+    <section class="slogan-marquee" aria-label="Mensajes de JL Camiones">
+      <div class="slogan-track">
+        <span>🚛 CALIDAD Y VARIEDAD</span><i>✦</i><span>EL REPUESTO QUE TU CAMIÓN NECESITA</span><i>✦</i><span>¡Y AL MEJOR PRECIO!</span><i>✦</i><span>ATENCIÓN PERSONALIZADA</span><i>✦</i>
+        <span aria-hidden="true">🚛 CALIDAD Y VARIEDAD</span><i aria-hidden="true">✦</i><span aria-hidden="true">EL REPUESTO QUE TU CAMIÓN NECESITA</span><i aria-hidden="true">✦</i><span aria-hidden="true">¡Y AL MEJOR PRECIO!</span><i aria-hidden="true">✦</i><span aria-hidden="true">ATENCIÓN PERSONALIZADA</span><i aria-hidden="true">✦</i>
+      </div>
+    </section>
+    <section class="promo-reel" aria-labelledby="reel-title">
+      <div class="reel-copy">
+        <p class="eyebrow">JL CAMIONES · REPUESTOS PARA CAMIONES</p>
+        <h2 id="reel-title">¿Necesitas repuestos para tu camión?</h2>
+        <p>Calidad, variedad y atención personalizada para que sigas en la ruta.</p>
+        <a class="button" href="https://wa.me/584245329777" target="_blank" rel="noopener">¡CONSULTA POR WHATSAPP! ↗</a>
+        <div class="reel-tags"><span>🚚 Envíos nacionales*</span><span>🔧 Consulta compatibilidad</span></div>
+        <small>*Consulta cobertura, disponibilidad y condiciones del envío.</small>
+      </div>
+      <div class="reel-video-wrap">
+        <div class="brand-reel" id="brand-reel" role="region" aria-roledescription="carrusel" aria-label="Marcas con las que trabaja JL Camiones">
+          <div class="reel-progress" id="reel-progress"></div>
+          <div class="reel-bars" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="reel-slides" id="reel-slides"></div>
+          <div class="reel-road" aria-hidden="true"><span class="reel-truck">🚛</span></div>
+          <button type="button" class="reel-next" id="reel-next" aria-label="Siguiente">&#10095;</button>
+          <div class="reel-dots" id="reel-dots"></div>
+        </div>
+        <span class="video-caption">EN MARCHA CONTIGO</span>
+      </div>
+    </section>
     <section class="benefits">
       <div><b>01</b> Atención personalizada</div>
       <div><b>02</b> Cotización por WhatsApp</div>
       <div><b>03</b> Repuestos para camiones</div>
     </section>
+    <!-- Promoción de demostración: reemplazar o retirar antes de publicar. -->
+    <section class="promo-banner" aria-label="Promoción de ejemplo">
+      <div class="promo-content">
+        <span class="promo-kicker">OFERTA DE EJEMPLO · JL CAMIONES</span>
+        <h2>¡Dale más kilómetros a tu camión!</h2>
+        <p><strong>10% de descuento</strong> en repuestos seleccionados.</p>
+        <small>Promoción demostrativa. Consulta cuáles repuestos aplican y confirma vigencia por WhatsApp.</small>
+      </div>
+      <a class="promo-cta" href="https://wa.me/584245329777" target="_blank" rel="noopener">
+        Consultar promoción <span aria-hidden="true">↗</span>
+      </a>
+      <span class="promo-percent" aria-hidden="true">10<small>% OFF</small></span>
+    </section>
+
 
     <section id="catalogo" class="catalog">
       <div class="heading">
@@ -54,14 +94,14 @@
           <p class="eyebrow">NUESTRO CATÁLOGO</p>
           <h2>Busca tu repuesto</h2>
           <p class="muted">
-            Productos de ejemplo: los reemplazaremos con tu inventario real.
+            Precios provisionales en USD. Confirma precio y disponibilidad por WhatsApp.
           </p>
         </div>
 
         <div class="cart-summary">
           <span>Tu cotización</span>
           <strong><span id="cart-count">0</span> productos</strong>
-          <button id="open-cart">Ver cotización →</button>
+          <button id="open-cart" class="floating-cart" aria-label="Abrir carrito">🛒 Carrito <span id="floating-cart-count">0</span></button>
         </div>
       </div>
 
@@ -107,27 +147,139 @@
       <div class="drawer-head">
         <div>
           <p class="eyebrow">JL CAMIONES</p>
-          <h2 id="cart-title">Tu cotización</h2>
+          <h2 id="cart-title">Tu pedido</h2>
         </div>
         <button id="close-cart" class="close" aria-label="Cerrar">×</button>
       </div>
 
-      <div id="cart-items"></div>
-      <p id="cart-empty" class="muted">
-        Todavía no has agregado productos.
+      <div class="cart-tools"><span>Repuestos seleccionados</span><button type="button" id="clear-cart" class="clear-cart-button">🗑️ Vaciar carrito</button></div>
+      <div id="cart-items" class="cart-items"></div>
+      <p id="cart-empty" class="cart-empty">
+        <span class="empty-cart-icon">🛠️</span>
+        <strong>Tu pedido está vacío</strong>
+        <span>Agrega los repuestos que necesitas para tu camión.</span>
       </p>
 
-      <label for="customer-notes">Detalles adicionales (opcional)</label>
-      <textarea id="customer-notes" rows="3"
-        placeholder="Marca, modelo o año del camión..."></textarea>
+      <div class="checkout-fields">
+        <label class="visually-hidden" for="customer-name">Tu nombre</label>
+        <input id="customer-name" type="text" placeholder="Tu nombre" autocomplete="name">
 
+        <span class="field-caption">¿Cómo deseas recibir tus repuestos?</span>
+        <div class="delivery-options" role="group" aria-label="Método de entrega">
+          <button type="button" class="delivery-option is-selected" data-delivery="Retiro en tienda" aria-pressed="true">🏪 Retiro en tienda</button>
+          <button type="button" class="delivery-option" data-delivery="Envío / delivery" aria-pressed="false">🚚 Envío</button>
+        </div>
+
+        <div id="shipping-carrier-field" class="shipping-carrier-field" hidden>
+          <label class="field-caption" for="shipping-carrier">¿Por cuál empresa deseas el envío?</label>
+          <select id="shipping-carrier">
+            <option value="">Selecciona la empresa de envío</option>
+            <option>MRW</option>
+            <option>Zoom</option>
+          </select>
+        </div>
+
+        <label class="visually-hidden" for="payment-method">Método de pago</label>
+        <select id="payment-method">
+          <option value="">Método de pago (seleccionar)</option>
+          <option>Efectivo</option>
+          <option>Pago Móvil</option>
+          <option>Zelle</option>
+          <option>Binance</option>
+        </select>
+
+        <label class="visually-hidden" for="customer-notes">Detalles del pedido</label>
+        <textarea id="customer-notes" rows="3" placeholder="Detalles del camión (marca, modelo, año) o notas del pedido..."></textarea>
+      </div>
+
+      <div class="cart-total-line"><strong>Total estimado</strong><span></span><strong id="cart-total-value">$0.00 USD</strong></div>
+      <p class="cart-disclaimer">Precio estimado. Confirma disponibilidad, compatibilidad y precio final con JL Camiones.</p>
       <button id="send-whatsapp" class="send-button">
-        Enviar cotización por WhatsApp ↗
+        Enviar pedido por WhatsApp ↗
       </button>
-      <p class="small">
-        Se abrirá WhatsApp para revisar el mensaje antes de enviarlo.
-      </p>
+      <p class="small">WhatsApp se abrirá con el detalle de tu pedido listo para revisar.</p>
     </section>
   </div>
+<script>
+/* reel.js — carrusel animado de marcas (reemplaza el video). */
+(function () {
+  const INTERVAL = 3200;
+  const IG = (typeof AJUSTES !== "undefined" && AJUSTES.instagram || "").split("/").filter(Boolean).pop() || "jlcamiones";
+  // Para usar logos oficiales: guarda el archivo en fotos/marcas/ y escribe su nombre en "logo".
+  const SLIDES = [
+    { type: "intro" },
+    { cls: "freightliner", name: "Freightliner", logo: "freightliner.png" },
+    { cls: "mercedes", name: "Mercedes-Benz", logo: "mercedes-benz.png" },
+    { cls: "mann", name: "Mann Filter", logo: "mann-filter.png" },
+    { cls: "worldparts", name: "World Parts", logo: "world-parts.png" },
+    { cls: "ford", name: "Ford Cargo", logo: "ford-cargo.png" },
+    { cls: "international", name: "Internacional", logo: "internacional.png" },
+    { type: "outro" }
+  ];
+  const root = document.getElementById("brand-reel");
+  if (!root) return;
+  const box = document.getElementById("reel-slides");
+  const dots = document.getElementById("reel-dots");
+  const bar = document.getElementById("reel-progress");
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+
+  const nodes = SLIDES.map((s, i) => {
+    const slide = el("div", "reel-slide");
+    if (s.type === "intro") {
+      const t = el("div", "reel-title"); t.innerHTML = "Tenemos las <em>mejores marcas</em>";
+      const logo = new Image(); logo.className = "reel-logo-badge"; logo.alt = "JL Camiones"; logo.src = "fotos/logo-jl-camiones-preview.png";
+      slide.append(logo, t, el("span", "reel-pill", "A tu disposición"));
+    } else if (s.type === "outro") {
+      const c = el("div", "reel-closing");
+      const prof = el("div", "reel-profile"), av = new Image();
+      av.className = "reel-avatar"; av.alt = "JL Camiones"; av.src = "fotos/icono-jl-camion.png";
+      av.onerror = () => { av.onerror = null; av.src = "fotos/logo-jl-camiones-preview.png"; };
+      const who = el("div", "reel-who"); who.append(el("strong", "", "@" + IG), el("span", "", "JL Camiones · Barquisimeto"));
+      prof.append(av, who);
+      c.append(el("div", "reel-title", "¡Y mucho más!"), el("div", "reel-sub", "Síguenos para que no te pierdas de nada"), prof);
+      slide.append(c);
+    } else {
+      const text = el("div", "reel-brand " + s.cls, s.name);
+      const img = new Image();
+      img.className = "reel-logo-img"; img.alt = s.name;
+      img.onload = () => text.replaceWith(img);
+      img.src = "fotos/marcas/" + s.logo;
+      const plate = el("div", "reel-plate"); plate.append(text);
+      const n = SLIDES.slice(0, i + 1).filter(x => x.cls).length, total = SLIDES.filter(x => x.cls).length;
+      const chips = el("div", "reel-chips"); ["Calidad", "Mejor precio", "Consulta compatibilidad"].forEach(c => chips.append(el("span", "", c)));
+      slide.append(el("div", "reel-count", "MARCA " + String(n).padStart(2, "0") + " / " + String(total).padStart(2, "0")), plate, el("div", "reel-sub", "Repuestos para " + s.name), chips);
+    }
+    box.appendChild(slide);
+    const d = el("button"); d.type = "button"; d.setAttribute("aria-label", "Ir a la diapositiva " + (i + 1));
+    d.addEventListener("click", () => { go(i); });
+    dots.appendChild(d);
+    return { slide, dot: d };
+  });
+
+  let cur = -1, timer = null, paused = false, start = 0, raf = 0;
+  function go(i) {
+    const prev = cur;
+    cur = (i + nodes.length) % nodes.length;
+    nodes.forEach((n, k) => {
+      n.slide.classList.toggle("is-active", k === cur);
+      n.slide.classList.toggle("is-leaving", k === prev && k !== cur);
+      n.dot.classList.toggle("is-active", k === cur);
+    });
+    restart();
+  }
+  function tick(t) {
+    if (!paused) { start = start || t; bar.style.width = Math.min(100, (t - start) / INTERVAL * 100) + "%"; if (t - start >= INTERVAL) return go(cur + 1); }
+    raf = requestAnimationFrame(tick);
+  }
+  function restart() { cancelAnimationFrame(raf); start = 0; bar.style.width = "0"; raf = requestAnimationFrame(tick); }
+
+  document.getElementById("reel-next").addEventListener("click", () => go(cur + 1));
+  root.addEventListener("mouseenter", () => { paused = true; });
+  root.addEventListener("mouseleave", () => { paused = false; start = 0; });
+  document.addEventListener("visibilitychange", () => { paused = document.hidden; start = 0; });
+  go(0);
+})();
+
+</script>
 </body>
 </html>
