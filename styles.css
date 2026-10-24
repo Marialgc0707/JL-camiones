@@ -1014,3 +1014,27 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .legal-page table { border-collapse: collapse; width: 100%; font-size: 14px; margin: 10px 0; }
 .legal-page th, .legal-page td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
 .legal-page a { color: var(--blue); text-decoration: underline; }
+
+/* Instagram */
+.ig-icon { vertical-align: -3px; margin-right: 4px; }
+.reel-copy .ig-button { margin-left: 8px; background: linear-gradient(45deg, #f09433, #dc2743 55%, #bc1888); color: #fff; }
+.ig-footer { display: inline-flex; align-items: center; gap: 6px; color: #fff; font-size: 12px; font-weight: 700; padding: 6px 12px; border: 1px solid #ffffff30; border-radius: 999px; }
+.ig-footer:hover { border-color: var(--cyan); color: var(--cyan); }
+a.reel-profile { text-decoration: none; transition: transform .2s; }
+a.reel-profile:hover { transform: scale(1.04); }
+
+/* Perfil de Instagram en la diapositiva final */
+.reel-slide.is-active .reel-profile { pointer-events: auto; cursor: pointer; }
+.reel-profile .reel-avatar { box-shadow: 0 0 0 3px #dc2743, 0 0 0 5px #f09433; }
+.reel-who strong { color: #fff; }
+.reel-follow { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 999px; background: linear-gradient(45deg, #f09433, #dc2743 55%, #bc1888); color: #fff; font-size: 12px; font-weight: 800; white-space: nowrap; }
+.reel-profile:hover .reel-follow { filter: brightness(1.12); }
+
+/* Sección de promociones */
+.contact-band .promo-vigencia { display: block; margin-top: 10px; color: #ffd75e; font-size: 12px; font-weight: 700; }
+.contact-band .promo-vigencia:empty { display: none; }
+.contact-band .promo-badge { flex: 0 0 auto; display: grid; place-items: center; min-width: 130px; height: 130px; padding: 0 18px; border-radius: 50%; background: #ffc400; color: #111; font-family: "Barlow Condensed", Impact, sans-serif; font-size: 48px; font-weight: 900; line-height: 1; transform: rotate(-8deg); box-shadow: 0 0 0 5px #ffffff22, 0 12px 28px #0006; }
+.contact-band .promo-badge[hidden] { display: none; }
+.contact-band.is-promo .eyebrow { color: #ffd75e; }
+@media (max-width: 760px) { .contact-band .promo-badge { min-width: 100px; height: 100px; font-size: 38px; } }
+.contact-band > div:first-child { flex: 1; }

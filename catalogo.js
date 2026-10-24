@@ -32,6 +32,19 @@ const NEGOCIO = {
   horario: "Lunes a Viernes 8:00am - 5:00pm"        // Ej: Lunes a viernes 8:00 a. m. – 5:00 p. m.
 };
 
+/* PROMOCIÓN: edita estos textos para cambiar la sección de promociones del inicio.
+   Pon activa: false para volver al mensaje "¿No encuentras lo que buscas?".
+   Los valores de abajo son EJEMPLOS: cámbialos por tu promoción real antes de publicar. */
+const PROMO = {
+  activa: true,
+  etiqueta: "PROMOCIÓN DEL MES",
+  titulo: "Descuento en repuestos seleccionados.",
+  texto: "Pregunta por nuestras ofertas y arma tu cotización por WhatsApp.",
+  destacado: "-10%",
+  vigencia: "Válido hasta agotar existencias",
+  boton: "QUIERO LA PROMO"
+};
+
 const MARCAS = [
   { nombre: "Mercedes-Benz", emoji: "🚛" },
   { nombre: "Freightliner", emoji: "🚛" },

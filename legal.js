@@ -10,4 +10,9 @@
     if (val[k]) el.textContent = val[k];
     else { el.textContent = "[COMPLETAR: " + (nombre[k] || k) + "]"; el.classList.add("pendiente"); }
   });
+  // Instagram: todos los enlaces con data-ig usan AJUSTES.instagram
+  const ig = String(A.instagram || "").trim();
+  const handle = ig.split("/").filter(Boolean).pop();
+  document.querySelectorAll("a[data-ig]").forEach(a => { if (ig) a.href = ig; else a.hidden = true; });
+  document.querySelectorAll("[data-ig-handle]").forEach(e => { if (handle) e.textContent = "@" + handle; });
 })();
