@@ -21,6 +21,17 @@ const AJUSTES = {
   horario: { 0: null, 1: null, 2: null, 3: null, 4: null, 5: null, 6: null }
 };
 
+/* DATOS LEGALES DEL NEGOCIO: complétalos. Aparecen en el pie de página y en las páginas legales.
+   Mientras estén vacíos, el sitio mostrará "[COMPLETAR: ...]" en amarillo. */
+const NEGOCIO = {
+  razonSocial: "empresa",   // Nombre legal o nombre del comerciante
+  rif: "J-04598497-4",           // Ej: J-12345678-9 / V-12345678-9
+  direccion: "carrera 21A con calle 56 y 57",     // Dirección física completa
+  ciudad: "Barquisimeto, Lara, Venezuela",
+  correo: "luis@gmail.com",        // Correo de contacto
+  horario: "Lunes a Viernes 8:00am - 5:00pm"        // Ej: Lunes a viernes 8:00 a. m. – 5:00 p. m.
+};
+
 const MARCAS = [
   { nombre: "Mercedes-Benz", emoji: "🚛" },
   { nombre: "Freightliner", emoji: "🚛" },
@@ -29,7 +40,7 @@ const MARCAS = [
   { nombre: "Internacional", emoji: "🚛" }
 ];
 
-const PRODUCTOS = [
+const PRODUCTOS_RESPALDO = [
   {
     id: 1,
     nombre: "Manilla interna roja",
@@ -115,3 +126,17 @@ const PRODUCTOS = [
     agotado: false
   }
 ];
+
+/* ===== Conexión con la base de datos (api.php) ===== */
+let PRODUCTOS = PRODUCTOS_RESPALDO;
+
+async function cargarProductos() {
+  try {
+    const res = await fetch("api.php", { cache: "no-store" });
+    if (!res.ok) throw new Error(res.status);
+    const lista = await res.json();
+    if (Array.isArray(lista)) PRODUCTOS = lista;
+  } catch (e) {
+    console.error("No se pudo leer la base de datos, usando respaldo:", e);
+  }
+}

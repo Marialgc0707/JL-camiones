@@ -5,11 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JL Camiones | Repuestos</title>
+  <meta name="description" content="Catálogo de repuestos para camiones en Barquisimeto. Arma tu cotización y envíala por WhatsApp.">
   <link rel="stylesheet" href="styles.css">
   <script src="catalogo.js" defer></script>
   <script src="app.js" defer></script>
+  <script src="legal.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div id="live" class="visually-hidden" aria-live="polite"></div>
   <header class="topbar">
     <a class="brand" href="#">
       <img src="fotos/icono-jl-camion.png" alt="Logo JL Camiones">
@@ -17,11 +21,10 @@
     </a>
     <a class="contact-link" href="https://wa.me/584245329777"
        target="_blank" rel="noopener">
-      Consultar por WhatsApp
-    </a>
+      Consultar por WhatsApp<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
   </header>
 
-  <main>
+  <main id="contenido">
     <section class="hero">
       <div>
         <p class="eyebrow">JL CAMIONES · BARQUISIMETO</p>
@@ -43,17 +46,17 @@
     </section>
     <section class="slogan-marquee" aria-label="Mensajes de JL Camiones">
       <div class="slogan-track">
-        <span>🚛 CALIDAD Y VARIEDAD</span><i>✦</i><span>EL REPUESTO QUE TU CAMIÓN NECESITA</span><i>✦</i><span>¡Y AL MEJOR PRECIO!</span><i>✦</i><span>ATENCIÓN PERSONALIZADA</span><i>✦</i>
-        <span aria-hidden="true">🚛 CALIDAD Y VARIEDAD</span><i aria-hidden="true">✦</i><span aria-hidden="true">EL REPUESTO QUE TU CAMIÓN NECESITA</span><i aria-hidden="true">✦</i><span aria-hidden="true">¡Y AL MEJOR PRECIO!</span><i aria-hidden="true">✦</i><span aria-hidden="true">ATENCIÓN PERSONALIZADA</span><i aria-hidden="true">✦</i>
+        <span>🚛 REPUESTOS PARA CAMIONES</span><i>✦</i><span>CONSULTA COMPATIBILIDAD</span><i>✦</i><span>COTIZA POR WHATSAPP</span><i>✦</i><span>ATENCIÓN PERSONALIZADA</span><i>✦</i>
+        <span aria-hidden="true">🚛 REPUESTOS PARA CAMIONES</span><i aria-hidden="true">✦</i><span aria-hidden="true">CONSULTA COMPATIBILIDAD</span><i aria-hidden="true">✦</i><span aria-hidden="true">COTIZA POR WHATSAPP</span><i aria-hidden="true">✦</i><span aria-hidden="true">ATENCIÓN PERSONALIZADA</span><i aria-hidden="true">✦</i>
       </div>
     </section>
     <section class="promo-reel" aria-labelledby="reel-title">
       <div class="reel-copy">
         <p class="eyebrow">JL CAMIONES · REPUESTOS PARA CAMIONES</p>
         <h2 id="reel-title">¿Necesitas repuestos para tu camión?</h2>
-        <p>Calidad, variedad y atención personalizada para que sigas en la ruta.</p>
-        <a class="button" href="https://wa.me/584245329777" target="_blank" rel="noopener">¡CONSULTA POR WHATSAPP! ↗</a>
-        <div class="reel-tags"><span>🚚 Envíos nacionales*</span><span>🔧 Consulta compatibilidad</span></div>
+        <p>Variedad de repuestos y atención personalizada para que sigas en la ruta.</p>
+        <a class="button" href="https://wa.me/584245329777" target="_blank" rel="noopener">¡CONSULTA POR WHATSAPP! ↗<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+        <div class="reel-tags"><span>🚚 Envíos por MRW o Zoom*</span><span>🔧 Consulta compatibilidad</span></div>
         <small>*Consulta cobertura, disponibilidad y condiciones del envío.</small>
       </div>
       <div class="reel-video-wrap">
@@ -63,6 +66,7 @@
           <div class="reel-slides" id="reel-slides"></div>
           <div class="reel-road" aria-hidden="true"><span class="reel-truck">🚛</span></div>
           <button type="button" class="reel-next" id="reel-next" aria-label="Siguiente">&#10095;</button>
+          <button type="button" class="reel-pause" id="reel-pause" aria-label="Pausar carrusel">&#10074;&#10074;</button>
           <div class="reel-dots" id="reel-dots"></div>
         </div>
         <span class="video-caption">EN MARCHA CONTIGO</span>
@@ -72,19 +76,6 @@
       <div><b>01</b> Atención personalizada</div>
       <div><b>02</b> Cotización por WhatsApp</div>
       <div><b>03</b> Repuestos para camiones</div>
-    </section>
-    <!-- Promoción de demostración: reemplazar o retirar antes de publicar. -->
-    <section class="promo-banner" aria-label="Promoción de ejemplo">
-      <div class="promo-content">
-        <span class="promo-kicker">OFERTA DE EJEMPLO · JL CAMIONES</span>
-        <h2>¡Dale más kilómetros a tu camión!</h2>
-        <p><strong>10% de descuento</strong> en repuestos seleccionados.</p>
-        <small>Promoción demostrativa. Consulta cuáles repuestos aplican y confirma vigencia por WhatsApp.</small>
-      </div>
-      <a class="promo-cta" href="https://wa.me/584245329777" target="_blank" rel="noopener">
-        Consultar promoción <span aria-hidden="true">↗</span>
-      </a>
-      <span class="promo-percent" aria-hidden="true">10<small>% OFF</small></span>
     </section>
 
 
@@ -128,8 +119,7 @@
       </div>
       <a class="button" href="https://wa.me/584245329777"
          target="_blank" rel="noopener">
-        HABLAR CON JL ↗
-      </a>
+        HABLAR CON JL ↗<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
     </section>
   </main>
 
@@ -138,6 +128,13 @@
     <strong>JL Camiones</strong>
     <span>Barquisimeto, Venezuela · Confirma precio y disponibilidad por WhatsApp.</span>
   </footer>
+  <div class="legal-footer">
+    <p><strong data-n="razonSocial"></strong> · RIF <span data-n="rif"></span></p>
+    <p><span data-n="direccion"></span> · <span data-n="ciudad"></span></p>
+    <p>WhatsApp <span data-n="whatsapp"></span> · <span data-n="correo"></span> · Horario: <span data-n="horario"></span></p>
+    <nav aria-label="Información legal"><a href="privacidad.html">Política de privacidad</a><a href="terminos.html">Términos y condiciones</a><a href="reembolsos.html">Devoluciones y reembolsos</a></nav>
+    <p class="tm">Las marcas, nombres y logotipos mencionados pertenecen a sus respectivos propietarios y se usan solo para indicar la compatibilidad de los repuestos.</p>
+  </div>
 
   <div id="cart-panel" class="cart-panel" hidden>
     <div id="cart-backdrop" class="backdrop"></div>
@@ -149,7 +146,7 @@
           <p class="eyebrow">JL CAMIONES</p>
           <h2 id="cart-title">Tu pedido</h2>
         </div>
-        <button id="close-cart" class="close" aria-label="Cerrar">×</button>
+        <button id="close-cart" class="close" aria-label="Cerrar carrito">×</button>
       </div>
 
       <div class="cart-tools"><span>Repuestos seleccionados</span><button type="button" id="clear-cart" class="clear-cart-button">🗑️ Vaciar carrito</button></div>
@@ -189,11 +186,15 @@
         </select>
 
         <label class="visually-hidden" for="customer-notes">Detalles del pedido</label>
-        <textarea id="customer-notes" rows="3" placeholder="Detalles del camión (marca, modelo, año) o notas del pedido..."></textarea>
+        <textarea id="customer-notes" rows="3" placeholder="Detalles del camión (marca, modelo, año). No incluyas cédula, claves ni datos bancarios."></textarea>
       </div>
 
       <div class="cart-total-line"><strong>Total estimado</strong><span></span><strong id="cart-total-value">$0.00 USD</strong></div>
       <p class="cart-disclaimer">Precio estimado. Confirma disponibilidad, compatibilidad y precio final con JL Camiones.</p>
+      <div class="consent">
+        <input type="checkbox" id="consent-datos">
+        <label for="consent-datos">He leído la <a href="privacidad.html" target="_blank" rel="noopener">Política de Privacidad</a> y acepto que mis datos se usen para preparar y enviar mi pedido por WhatsApp. También acepto los <a href="terminos.html" target="_blank" rel="noopener">Términos</a> y la <a href="reembolsos.html" target="_blank" rel="noopener">política de devoluciones</a>.</label>
+      </div>
       <button id="send-whatsapp" class="send-button">
         Enviar pedido por WhatsApp ↗
       </button>
@@ -226,7 +227,7 @@
   const nodes = SLIDES.map((s, i) => {
     const slide = el("div", "reel-slide");
     if (s.type === "intro") {
-      const t = el("div", "reel-title"); t.innerHTML = "Tenemos las <em>mejores marcas</em>";
+      const t = el("div", "reel-title"); t.innerHTML = "Repuestos para <em>estas marcas</em>";
       const logo = new Image(); logo.className = "reel-logo-badge"; logo.alt = "JL Camiones"; logo.src = "fotos/logo-jl-camiones-preview.png";
       slide.append(logo, t, el("span", "reel-pill", "A tu disposición"));
     } else if (s.type === "outro") {
@@ -246,7 +247,7 @@
       img.src = "fotos/marcas/" + s.logo;
       const plate = el("div", "reel-plate"); plate.append(text);
       const n = SLIDES.slice(0, i + 1).filter(x => x.cls).length, total = SLIDES.filter(x => x.cls).length;
-      const chips = el("div", "reel-chips"); ["Calidad", "Mejor precio", "Consulta compatibilidad"].forEach(c => chips.append(el("span", "", c)));
+      const chips = el("div", "reel-chips"); ["Consulta compatibilidad", "Cotiza por WhatsApp", "Atención personalizada"].forEach(c => chips.append(el("span", "", c)));
       slide.append(el("div", "reel-count", "MARCA " + String(n).padStart(2, "0") + " / " + String(total).padStart(2, "0")), plate, el("div", "reel-sub", "Repuestos para " + s.name), chips);
     }
     box.appendChild(slide);
@@ -257,6 +258,7 @@
   });
 
   let cur = -1, timer = null, paused = false, start = 0, raf = 0;
+  let userPaused = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   function go(i) {
     const prev = cur;
     cur = (i + nodes.length) % nodes.length;
@@ -268,12 +270,18 @@
     restart();
   }
   function tick(t) {
-    if (!paused) { start = start || t; bar.style.width = Math.min(100, (t - start) / INTERVAL * 100) + "%"; if (t - start >= INTERVAL) return go(cur + 1); }
+    if (!paused && !userPaused) { start = start || t; bar.style.width = Math.min(100, (t - start) / INTERVAL * 100) + "%"; if (t - start >= INTERVAL) return go(cur + 1); }
     raf = requestAnimationFrame(tick);
   }
   function restart() { cancelAnimationFrame(raf); start = 0; bar.style.width = "0"; raf = requestAnimationFrame(tick); }
 
   document.getElementById("reel-next").addEventListener("click", () => go(cur + 1));
+  const pb = document.getElementById("reel-pause");
+  const setPb = () => { pb.innerHTML = userPaused ? "&#9654;" : "&#10074;&#10074;"; pb.setAttribute("aria-label", userPaused ? "Reanudar carrusel" : "Pausar carrusel"); };
+  pb.addEventListener("click", () => { userPaused = !userPaused; start = 0; setPb(); });
+  root.addEventListener("focusin", () => { paused = true; });
+  root.addEventListener("focusout", () => { paused = false; start = 0; });
+  setPb();
   root.addEventListener("mouseenter", () => { paused = true; });
   root.addEventListener("mouseleave", () => { paused = false; start = 0; });
   document.addEventListener("visibilitychange", () => { paused = document.hidden; start = 0; });

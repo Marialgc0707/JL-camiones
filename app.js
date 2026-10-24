@@ -75,7 +75,7 @@ function renderProducts() {
       <p class="product-description">${escapeHtml(description)}</p>
       <div class="product-bottom">
         <div><strong>${money(product.precioDetal)}</strong><div class="price-note">Precio provisional</div></div>
-        <button class="add-button" type="button" data-add="${Number(product.id)}" ${product.agotado ? "disabled" : ""}>${product.agotado ? "Agotado" : "+ Agregar"}</button>
+        <button class="add-button" type="button" data-add="${Number(product.id)}" ${product.agotado ? "disabled" : ""} aria-label="${product.agotado ? "Agotado: " : "Agregar al carrito: "}${escapeHtml(product.nombre)}">${product.agotado ? "Agotado" : "Agregar"}</button>
       </div>`;
     card.append(imageArea, info);
     grid.appendChild(card);
@@ -129,8 +129,20 @@ function addToCart(id, change = 1) {
   renderCart();
 }
 
-function openCart() { cartPanel.hidden = false; document.body.style.overflow = "hidden"; }
-function closeCart() { cartPanel.hidden = true; document.body.style.overflow = ""; }
+let lastFocus = null;
+function openCart() { lastFocus = document.activeElement; cartPanel.hidden = false; document.body.style.overflow = "hidden"; document.querySelector("#close-cart").focus(); }
+function closeCart() { cartPanel.hidden = true; document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+/* Teclado: Escape cierra el carrito y el foco no se escapa del panel */
+document.addEventListener("keydown", e => {
+  if (cartPanel.hidden) return;
+  if (e.key === "Escape") { closeCart(); return; }
+  if (e.key !== "Tab") return;
+  const f = [...cartPanel.querySelectorAll('button, [href], input, select, textarea')].filter(x => !x.disabled && x.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
 
 document.querySelector("#open-cart").addEventListener("click", openCart);
 document.querySelector("#close-cart").addEventListener("click", closeCart);
@@ -146,6 +158,8 @@ grid.addEventListener("click", event => {
   const button = event.target.closest("[data-add]");
   if (!button) return;
   addToCart(button.dataset.add);
+  const live = document.querySelector("#live");
+  if (live) { live.textContent = ""; setTimeout(() => { live.textContent = "Producto agregado al carrito."; }, 50); }
   const original = button.textContent;
   button.textContent = "Agregado ✓";
   setTimeout(() => { if (button.isConnected) button.textContent = original; }, 900);
@@ -181,6 +195,8 @@ document.querySelectorAll(".delivery-option").forEach(button => {
 document.querySelector("#send-whatsapp").addEventListener("click", () => {
   if (!cart.size) { alert("Agrega al menos un producto a tu cotización."); return; }
   if (!cleanWhatsApp) { alert("Configura el número de WhatsApp en catalogo.js."); return; }
+  const consent = document.querySelector("#consent-datos");
+  if (!consent.checked) { alert("Para enviar tu pedido, acepta la Política de Privacidad."); consent.focus(); return; }
   const customerName = document.querySelector("#customer-name").value.trim();
   const paymentMethod = document.querySelector("#payment-method").value;
   const carrier = shippingCarrier.value;
@@ -205,6 +221,4 @@ document.querySelector("#send-whatsapp").addEventListener("click", () => {
   window.open(`https://wa.me/${cleanWhatsApp}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener,noreferrer");
 });
 
-renderCategories();
-renderProducts();
-renderCart();
+cargarProductos().then(() => { renderCategories(); renderProducts(); renderCart(); });
