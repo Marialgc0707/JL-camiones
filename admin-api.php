@@ -41,6 +41,21 @@ try {
     foreach ($r as &$p) { $p['id']=(int)$p['id']; $p['precio']=(float)$p['precio']; $p['precio_compra']=(float)$p['precio_compra']; $p['cantidad']=(int)$p['cantidad']; $p['agotado']=(bool)$p['agotado']; $p['visible']=(bool)$p['visible']; }
     out(['ok'=>true,'items'=>$r]);
   }
+  if ($action === 'promo_get') {
+    $pdo->exec("CREATE TABLE IF NOT EXISTS ajustes (clave VARCHAR(50) PRIMARY KEY, valor TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    $v = $pdo->query("SELECT valor FROM ajustes WHERE clave='promo'")->fetchColumn();
+    out(['ok'=>true,'promo'=>$v ? json_decode($v, true) : null]);
+  }
+  if ($action === 'promo_save') { // promoción de la portada
+    $pdo->exec("CREATE TABLE IF NOT EXISTS ajustes (clave VARCHAR(50) PRIMARY KEY, valor TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    $cut = fn($k,$n) => mb_substr(trim((string)($in[$k] ?? '')), 0, $n);
+    $p = ['activa'=>!empty($in['activa']) && $in['activa']!=='0' && $in['activa']!=='false',
+          'etiqueta'=>$cut('etiqueta',40), 'titulo'=>$cut('titulo',90), 'texto'=>$cut('texto',200),
+          'destacado'=>$cut('destacado',12), 'vigencia'=>$cut('vigencia',80), 'boton'=>$cut('boton',30)];
+    if ($p['activa'] && $p['titulo'] === '') fail('Escribe el título de la promoción');
+    $pdo->prepare("REPLACE INTO ajustes (clave,valor) VALUES ('promo',?)")->execute([json_encode($p, JSON_UNESCAPED_UNICODE)]);
+    out(['ok'=>true]);
+  }
   if ($action === 'stock') { // botón agotado / disponible (no toca la cantidad)
     $pdo->prepare("UPDATE productos SET agotado=? WHERE id=?")->execute([!empty($in['agotado'])?1:0,(int)$in['id']]); out(['ok'=>true]);
   }

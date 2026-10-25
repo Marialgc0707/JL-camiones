@@ -10,6 +10,12 @@
     if (val[k]) el.textContent = val[k];
     else { el.textContent = "[COMPLETAR: " + (nombre[k] || k) + "]"; el.classList.add("pendiente"); }
   });
+  // WhatsApp: todos los enlaces con data-wa usan AJUSTES.whatsapp (único lugar donde se escribe el número)
+  document.querySelectorAll("a[data-wa]").forEach(a => {
+    if (!wa) { a.hidden = true; return; }
+    const t = a.dataset.waText;
+    a.href = "https://wa.me/" + wa + (t ? "?text=" + encodeURIComponent(t) : "");
+  });
   // Instagram: todos los enlaces con data-ig usan AJUSTES.instagram
   const ig = String(A.instagram || "").trim();
   const handle = ig.split("/").filter(Boolean).pop();

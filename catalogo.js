@@ -32,11 +32,12 @@ const NEGOCIO = {
   horario: "Lunes a Viernes 8:00am - 5:00pm"        // Ej: Lunes a viernes 8:00 a. m. – 5:00 p. m.
 };
 
-/* PROMOCIÓN: edita estos textos para cambiar la sección de promociones del inicio.
+/* PROMOCIÓN (respaldo): la promoción ahora se edita desde el panel de administración.
+   Estos valores solo se usan si el panel aún no ha guardado ninguna.
    Pon activa: false para volver al mensaje "¿No encuentras lo que buscas?".
    Los valores de abajo son EJEMPLOS: cámbialos por tu promoción real antes de publicar. */
 const PROMO = {
-  activa: true,
+  activa: false,
   etiqueta: "PROMOCIÓN DEL MES",
   titulo: "Descuento en repuestos seleccionados.",
   texto: "Pregunta por nuestras ofertas y arma tu cotización por WhatsApp.",
