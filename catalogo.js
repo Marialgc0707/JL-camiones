@@ -142,15 +142,19 @@ const PRODUCTOS_RESPALDO = [
 ];
 
 /* ===== Conexión con la base de datos (api.php) ===== */
-let PRODUCTOS = PRODUCTOS_RESPALDO;
+let PRODUCTOS = [];
 
 async function cargarProductos() {
   try {
     const res = await fetch("api.php", { cache: "no-store" });
     if (!res.ok) throw new Error(res.status);
     const lista = await res.json();
-    if (Array.isArray(lista)) PRODUCTOS = lista;
+    if (!Array.isArray(lista)) throw new Error('Respuesta de catálogo inválida');
+    PRODUCTOS = lista;
+    return true;
   } catch (e) {
-    console.error("No se pudo leer la base de datos, usando respaldo:", e);
+    PRODUCTOS = [];
+    console.error("No se pudo cargar el catálogo:", e);
+    return false;
   }
 }
