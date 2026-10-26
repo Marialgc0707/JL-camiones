@@ -95,4 +95,4 @@ try {
     out(['ok'=>true]);
   }
   fail('Acción desconocida');
-} catch (Throwable $e) { fail('Error del servidor', 500); }
+   } catch (Throwable $e) { fail('Error: '.$e->getMessage(), 500); }
