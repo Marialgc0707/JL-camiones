@@ -322,4 +322,13 @@ document.addEventListener("keydown", e => {
   else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
 });
 
-cargarProductos().then(() => { renderCategories(); renderBrands(); loadCart(); renderProducts(); renderCart(); });
+cargarProductos().then(disponible => {
+  if (!disponible) {
+    emptyMessage.hidden = true;
+    document.querySelector('#catalog-error').hidden = false;
+    searchInput.disabled = categoryFilter.disabled = brandFilter.disabled = true;
+    document.querySelector('#send-whatsapp').disabled = true;
+    return; // No borrar el carrito guardado durante una caída del servidor.
+  }
+  renderCategories(); renderBrands(); loadCart(); renderProducts(); renderCart();
+});

@@ -1,7 +1,7 @@
 JL CAMIONES — PROYECTO WEB
 
 Archivos:
-- index.html: abre este archivo en el navegador.
+- index.html: página pública, servida desde PHP con conexión a MySQL.
 - styles.css: estilos visuales.
 - catalogo.js: datos del negocio, marcas, horario y productos.
 - app.js: lógica del catálogo y carrito.
@@ -12,4 +12,12 @@ IMPORTANTE:
 2. El logo se espera en fotos/logo.png.
 3. No se recibieron fotos de repuestos/logo dentro de los archivos de código que se procesaron. Copia tus imágenes a la carpeta fotos y usa sus nombres en catalogo.js.
 4. Revisa en catalogo.js los campos marcados COMPLETAR antes de publicar: nombre/slogan/dirección, horario, mínimos al mayor, mapa y datos comerciales. El WhatsApp que ya estaba en el archivo se conservó.
-5. Para ver la página, descomprime la carpeta y abre index.html. También puedes abrir la carpeta en Visual Studio Code y usar Live Server si lo tienes instalado.
+5. Para usar el catálogo real, configura PHP y MySQL, importa database.sql y revisa config.php. Puedes iniciar el servidor local con php -S 127.0.0.1:8766 y abrir http://127.0.0.1:8766. Abrir el HTML directamente o usar un servidor estático no permite consultar productos.
+
+CORRECCIONES Y PRUEBAS
+- Si falla el catálogo, se muestra un aviso sin productos de respaldo. El carrito guardado se conserva para la próxima carga correcta.
+- Un producto con cantidad cero se publica como agotado y no puede marcarse disponible hasta agregar existencias.
+- Acceso: se permiten cinco fallos por cuenta o IP en una ventana de 15 minutos. Los siguientes intentos reciben HTTP 429 y Retry-After hasta que venza la ventana. Cambiar cookies no reinicia el contador.
+- El contador se guarda fuera del sitio, en una carpeta privada del directorio temporal. Para producción, establece JL_LOGIN_STATE_DIR a una carpeta persistente fuera de la raíz pública y escribible únicamente por el usuario de PHP. No borres su contenido como parte de un despliegue. Si el almacenamiento falla, el acceso devuelve HTTP 503.
+- El límite está diseñado para un solo servidor. En múltiples servidores se necesita almacenamiento compartido. Se usa REMOTE_ADDR: detrás de un proxy, configura la IP real con mecanismos de confianza del servidor; no aceptes cabeceras arbitrarias del cliente. Usuarios que compartan IP comparten el límite por IP.
+- Pruebas: node --test tests/catalog.test.cjs; php tests/login-limit.php; python3 tests/integration.py. La integración usa PHP, PDO SQLite y una base temporal con credenciales ficticias; no modifica la base del negocio. No sustituye la validación de despliegue contra MySQL.

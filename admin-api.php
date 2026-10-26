@@ -1,6 +1,7 @@
 <?php
 // Backend del panel (requiere sesión iniciada)
 require __DIR__.'/config.php';
+require __DIR__.'/login-limit.php';
 const SESION_MAX = 900; // 15 minutos sin actividad
 ini_set('session.gc_maxlifetime', (string)SESION_MAX);
 session_set_cookie_params(['httponly'=>true,'samesite'=>'Strict']);
@@ -21,10 +22,20 @@ $in = json_decode(file_get_contents('php://input'), true) ?: $_POST;
 
 if ($action === 'login') {
   $em = (string)($in['email'] ?? ''); $pw = (string)($in['pass'] ?? ''); $rol = null;
-  if (hash_equals(ADMIN_EMAIL, $em) && hash_equals(ADMIN_PASS, $pw)) $rol = 'cliente';
-  elseif (defined('DEV_EMAIL') && defined('DEV_PASS') && hash_equals(DEV_EMAIL, $em) && hash_equals(DEV_PASS, $pw)) $rol = 'dev';
+  try {
+    $attempt = loginLimit($em, $_SERVER['REMOTE_ADDR'] ?? 'unknown', function () use ($em, $pw) {
+      if (hash_equals(ADMIN_EMAIL, $em) && hash_equals(ADMIN_PASS, $pw)) return 'cliente';
+      if (defined('DEV_EMAIL') && defined('DEV_PASS') && hash_equals(DEV_EMAIL, $em) && hash_equals(DEV_PASS, $pw)) return 'dev';
+      return null;
+    });
+  } catch (Throwable $e) { fail('Acceso temporalmente no disponible. Intenta más tarde.', 503); }
+  if ($attempt['retry'] > 0) {
+    header('Retry-After: '.$attempt['retry']);
+    fail('Demasiados intentos. Intenta de nuevo en '.(int)ceil($attempt['retry']/60).' minutos.', 429);
+  }
+  $rol = $attempt['role'];
   if ($rol) { session_regenerate_id(true); $_SESSION['ok'] = true; $_SESSION['rol'] = $rol; $_SESSION['last'] = time(); out(['ok'=>true,'rol'=>$rol]); }
-  sleep(1); fail('Datos incorrectos', 401);
+  fail('Datos incorrectos', 401);
 }
 if ($action === 'me') out(['ok'=>!empty($_SESSION['ok']),'rol'=>$_SESSION['rol'] ?? '']);
 if (empty($_SESSION['ok'])) fail('Sesión vencida', 401);
@@ -57,7 +68,13 @@ try {
     out(['ok'=>true]);
   }
   if ($action === 'stock') { // botón agotado / disponible (no toca la cantidad)
-    $pdo->prepare("UPDATE productos SET agotado=? WHERE id=?")->execute([!empty($in['agotado'])?1:0,(int)$in['id']]); out(['ok'=>true]);
+    $agotado = !empty($in['agotado']) ? 1 : 0;
+    $pdo->prepare("UPDATE productos SET agotado=CASE WHEN cantidad<=0 THEN 1 ELSE ? END WHERE id=?")->execute([$agotado,(int)$in['id']]);
+    $s = $pdo->prepare("SELECT cantidad FROM productos WHERE id=?"); $s->execute([(int)$in['id']]);
+    $cantidad = $s->fetchColumn();
+    if ($cantidad === false) fail('Repuesto no encontrado', 404);
+    if (!$agotado && (int)$cantidad <= 0) fail('Agrega existencias antes de marcar el repuesto disponible', 409);
+    out(['ok'=>true]);
   }
   if ($action === 'delete') {
     $id=(int)$in['id']; $f=$pdo->prepare("SELECT foto FROM productos WHERE id=?"); $f->execute([$id]);
