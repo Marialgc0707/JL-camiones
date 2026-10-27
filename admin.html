@@ -110,8 +110,8 @@ dialog h2{margin:0 0 4px;font-size:32px;color:var(--navy)}
   </section>
   <div class="hazard"></div>
   <main>
-    <details class="promo-box" id="promo-box">
-      <summary>🔥 Promoción de la tienda <span class="promo-state" id="promo-state"></span></summary>
+    <details class="promo-box" id="promo-box" hidden>
+      <summary>🔥 Promoción de la tienda (solo desarrollador) <span class="promo-state" id="promo-state"></span></summary>
       <form class="promo-form" id="promo-form">
         <div class="chk"><label><input type="checkbox" name="activa"> Mostrar la promoción en la tienda</label></div>
         <div class="two"><label>Etiqueta<input name="etiqueta" maxlength="40" placeholder="Ej: PROMOCIÓN DEL MES"></label>
@@ -166,7 +166,8 @@ async function call(action, body){
 }
 async function init(){
   const s = await call("me"); isDev = s.rol === "dev"; const bs = document.querySelector(".brand small"); if (bs) bs.textContent = isDev ? "JL CAMIONES · MODO DESARROLLADOR" : "JL CAMIONES"; $("#login").hidden = !!s.ok; $("#app").hidden = !s.ok;
-  if (s.ok) { load(); loadPromo(); }
+  $("#promo-box").hidden = !(s.ok && isDev);
+  if (s.ok) { load(); if (isDev) loadPromo(); }
 }
 $("#enter").onclick = async () => {
   const r = await call("login",{email:$("#email").value.trim(),pass:$("#pass").value});

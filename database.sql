@@ -19,6 +19,11 @@ CREATE TABLE IF NOT EXISTS productos (
   creado      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS ajustes (
+  clave VARCHAR(50) PRIMARY KEY,
+  valor TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 INSERT INTO productos (nombre,marca,categoria,modelo,descripcion,foto,precio) VALUES
 ('Manilla interna roja','Mercedes-Benz','Manillas internas','1720 / 1634 / 2638','Manilla interna roja y negra. Verifica la compatibilidad con tu camión antes de comprar.','manilla-interna-mercedes.jpg',18),
 ('Buje de ballesta trasera','Freightliner','Suspensión','CL / M2','Buje de ballesta trasera. Confirma medidas y aplicación exacta del vehículo.','buje-ballesta-trasera.jpg',35),

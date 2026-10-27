@@ -46,25 +46,39 @@ function borrarFoto($f){ // solo borra fotos subidas desde el panel
   if (preg_match('/^up-[a-f0-9]+\.webp$/', $f) && is_file(__DIR__.'/fotos/'.$f)) unlink(__DIR__.'/fotos/'.$f);
 }
 
+function asegurarAjustes($pdo){ // crea la tabla si falta; si el usuario de MySQL no puede crearla, sigue (puede existir ya)
+  try { $pdo->exec("CREATE TABLE IF NOT EXISTS ajustes (clave VARCHAR(50) PRIMARY KEY, valor TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"); }
+  catch (Throwable $e) { /* si no existe, el guardado devolverá un error claro */ }
+}
+
 try {
   if ($action === 'list') {
     $r = $pdo->query("SELECT * FROM productos ORDER BY id DESC")->fetchAll();
     foreach ($r as &$p) { $p['id']=(int)$p['id']; $p['precio']=(float)$p['precio']; $p['precio_compra']=(float)$p['precio_compra']; $p['cantidad']=(int)$p['cantidad']; $p['agotado']=(bool)$p['agotado']; $p['visible']=(bool)$p['visible']; }
     out(['ok'=>true,'items'=>$r]);
   }
-  if ($action === 'promo_get') {
-    $pdo->exec("CREATE TABLE IF NOT EXISTS ajustes (clave VARCHAR(50) PRIMARY KEY, valor TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+  if ($action === 'promo_get') { // promociones: solo el desarrollador
+    if (($_SESSION['rol'] ?? '') !== 'dev') fail('Solo el desarrollador puede gestionar promociones', 403);
+    asegurarAjustes($pdo);
     $v = $pdo->query("SELECT valor FROM ajustes WHERE clave='promo'")->fetchColumn();
     out(['ok'=>true,'promo'=>$v ? json_decode($v, true) : null]);
   }
-  if ($action === 'promo_save') { // promoción de la portada
-    $pdo->exec("CREATE TABLE IF NOT EXISTS ajustes (clave VARCHAR(50) PRIMARY KEY, valor TEXT) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-    $cut = fn($k,$n) => mb_substr(trim((string)($in[$k] ?? '')), 0, $n);
-    $p = ['activa'=>!empty($in['activa']) && $in['activa']!=='0' && $in['activa']!=='false',
+  if ($action === 'promo_save') { // promoción de la portada: solo el desarrollador
+    if (($_SESSION['rol'] ?? '') !== 'dev') fail('Solo el desarrollador puede gestionar promociones', 403);
+    asegurarAjustes($pdo);
+    $cut = function ($k, $n) use ($in) {
+      $v = trim((string)($in[$k] ?? ''));
+      return function_exists('mb_substr') ? mb_substr($v, 0, $n, 'UTF-8') : (preg_match_all('/./us', $v, $m) ? implode('', array_slice($m[0], 0, $n)) : substr($v, 0, $n));
+    };
+    $act = $in['activa'] ?? false;
+    $p = ['activa'=>!empty($act) && $act!=='0' && $act!=='false',
           'etiqueta'=>$cut('etiqueta',40), 'titulo'=>$cut('titulo',90), 'texto'=>$cut('texto',200),
           'destacado'=>$cut('destacado',12), 'vigencia'=>$cut('vigencia',80), 'boton'=>$cut('boton',30)];
     if ($p['activa'] && $p['titulo'] === '') fail('Escribe el título de la promoción');
-    $pdo->prepare("REPLACE INTO ajustes (clave,valor) VALUES ('promo',?)")->execute([json_encode($p, JSON_UNESCAPED_UNICODE)]);
+    // Sin JSON_UNESCAPED_UNICODE: emojis y tildes se guardan como \uXXXX (ASCII), así no depende del charset de la conexión
+    $json = json_encode($p);
+    if ($json === false) fail('El texto de la promoción tiene caracteres no válidos');
+    $pdo->prepare("REPLACE INTO ajustes (clave,valor) VALUES ('promo',?)")->execute([$json]);
     out(['ok'=>true]);
   }
   if ($action === 'stock') { // botón agotado / disponible (no toca la cantidad)
@@ -112,4 +126,7 @@ try {
     out(['ok'=>true]);
   }
   fail('Acción desconocida');
-   } catch (Throwable $e) { fail('Error: '.$e->getMessage(), 500); }
+   } catch (Throwable $e) {
+  if (strpos($e->getMessage(), 'ajustes') !== false) fail('Falta la tabla "ajustes" en la base de datos. Ejecuta agregar-promociones.sql en phpMyAdmin.', 500);
+  fail('Error: '.$e->getMessage(), 500);
+}
